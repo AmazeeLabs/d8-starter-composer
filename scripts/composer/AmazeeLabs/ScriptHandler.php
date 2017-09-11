@@ -23,10 +23,12 @@ class ScriptHandler {
 ***** d8-starter-composer Config *****
 *****************************************');
 
-    $event->getIO()->write('What is the vendor/project (e.g., AmazeeLabs/awesome-new-project_com)?');
-    $name = trim(fgets($handle));
+    $event->getIO()->write('What is the github project (e.g., AmazeeLabs/awesome-new-project_com)?');
+    $project = trim(fgets($handle));
 
-    static::replaceInFile('AmazeeLabs/d8-starter-composer', $name, $root . '/composer.json');
+    static::replaceInFile('AmazeeLabs/d8-starter-composer', $project, $root . '/composer.json');
+
+    exec('git remote set-url origin ' . escapeshellarg('git@github.com:' . $project . '.git'));
   }
 
   public static function replaceInFile($needle, $haystack, $file) {
