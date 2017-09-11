@@ -52,15 +52,19 @@
     "autoload": {
         "classmap": [
             "scripts/composer/ScriptHandler.php",
-            "scripts/composer/AmazeeIO/ScriptHandler.php"
+            "scripts/composer/AmazeeIO/ScriptHandler.php",
+            "scripts/composer/AmazeeLabs/ScriptHandler.php"
         ]
     },
     "scripts": {
         "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "amazeeio-init": "AmazeeIO\\composer\\ScriptHandler::postInstall",
+        "amazeelabs-init": "AmazeeLabs\\composer\\ScriptHandler::postInstall",
+        "amazee-init": ["@amazeeio-init", "@amazeelabs-init"],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "AmazeeIO\\composer\\ScriptHandler::postInstall"
+            "AmazeeIO\\composer\\ScriptHandler::postInstall",
+            "AmazeeLabs\\composer\\ScriptHandler::postInstall"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
