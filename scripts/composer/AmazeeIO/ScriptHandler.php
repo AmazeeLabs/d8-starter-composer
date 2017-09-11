@@ -11,7 +11,7 @@ use Composer\Script\Event;
 
 class ScriptHandler {
 
-  public static function postInstall(Event $event) {
+  public static function init(Event $event) {
     static::configureLocalEnvironment($event);
   }
 

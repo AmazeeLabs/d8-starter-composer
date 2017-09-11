@@ -58,16 +58,18 @@
     },
     "scripts": {
         "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-        "amazeeio-init": "AmazeeIO\\composer\\ScriptHandler::postInstall",
-        "amazeelabs-init": "AmazeeLabs\\composer\\ScriptHandler::postInstall",
+        "amazeeio-init": "AmazeeIO\\composer\\ScriptHandler::init",
+        "amazeelabs-init": "AmazeeLabs\\composer\\ScriptHandler::init",
         "amazee-init": ["@amazeeio-init", "@amazeelabs-init"],
         "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "AmazeeIO\\composer\\ScriptHandler::postInstall",
-            "AmazeeLabs\\composer\\ScriptHandler::postInstall"
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "post-create-project-cmd": [
+            "AmazeeIO\\composer\\ScriptHandler::init",
+            "AmazeeLabs\\composer\\ScriptHandler::init"
         ]
     },
     "extra": {
