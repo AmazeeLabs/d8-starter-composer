@@ -6,6 +6,9 @@ The starter lives at http://d8-starter-composer.io.dev.dev1.compact.amazee.io/ (
 
 How to setup a new project from d8-starter-composer: http://confluence.amazeelabs.com/display/KNOWLEDGE/Create+new+Drupal+8+Composer+project
 
+TL;DR
+```composer create-project --stability dev --no-interaction --keep-vcs --repository '{"type": "vcs","url": "https://github.com/AmazeeLabs/d8-starter-composer"}' AmazeeLabs/d8-starter-composer awesome-new-project_com```
+
 ## Recipes
 
 The most recent version of the following recipes can be found at https://github.com/AmazeeLabs/d8-starter-composer#readme
