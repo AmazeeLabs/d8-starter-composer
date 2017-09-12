@@ -23,14 +23,16 @@ class ScriptHandler {
 ***** amazee.io Local Docker Config *****
 *****************************************');
 
-    $event->getIO()->write('What is the sitegroup (e.g., awesome-new-project_com)?');
-    $site_name = trim(fgets($handle));
+    $default = 'awesome-new-project_com';
+    $event->getIO()->write('What is the sitegroup [' . $default . ']?');
+    $site_name = trim(fgets($handle)) ?: $default;
 
     static::replaceInFile('d8-starter_composer_io', $site_name, $root . '/config/sync/system.site.yml');
     static::replaceInFile('d8-starter_io_composer', $site_name, $root . '/.amazeeio.yml');
 
-    $event->getIO()->write('What is the hostname (e.g., new-project.com.docker.amazee.io)?');
-    $hostname = trim(fgets($handle));
+    $default = 'awesome-new-project.com.docker.amazee.io';
+    $event->getIO()->write('What is the hostname [' . $default . ']?');
+    $hostname = trim(fgets($handle)) ?: $default;
 
     static::replaceInFile('d8-starter-composer.io.docker.amazee.io', $hostname, $root . '/docker-compose.yml');
   }

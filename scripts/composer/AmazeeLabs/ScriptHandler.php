@@ -23,8 +23,9 @@ class ScriptHandler {
 ***** d8-starter-composer Config *****
 *****************************************');
 
-    $event->getIO()->write('What is the github project (e.g., AmazeeLabs/awesome-new-project_com)?');
-    $project = trim(fgets($handle));
+    $default = 'AmazeeLabs/awesome-new-project_com';
+    $event->getIO()->write('What is the github project [' . $default . ']?');
+    $project = trim(fgets($handle)) ?: $default;
 
     static::replaceInFile('AmazeeLabs/d8-starter-composer', $project, $root . '/composer.json');
 
