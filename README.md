@@ -9,6 +9,23 @@ How to setup a new project from d8-starter-composer: http://confluence.amazeelab
 TL;DR
 ```composer create-project --stability dev --no-interaction --keep-vcs --repository '{"type": "vcs","url": "https://github.com/AmazeeLabs/d8-starter-composer"}' AmazeeLabs/d8-starter-composer awesome-new-project_com```
 
+## Important notes about Composer
+
+### If using Docker: don't change dependencies outside the container
+
+With amazee.io local stack, most of Mac and Windows users run Composer commands outside the Docker container because file system works faster in this case. This is perfectly fine to run `composer install` in this way. But running `composer update` and `composer require` outside the container may lead to issues. The reason is:
+- Composer considers OS type and PHP version while bulding the dependency tree
+- Composer packages can depend on OS type and PHP version
+- your OS type and PHP version may differ from the container ones
+
+So the safer way is to *always run `composer update` and `composer require` from the Docker container*.
+
+BTW, this is true for most of other dependency managers: `npm`, `yarn`, etc.
+
+### Running `composer require` prior to `composer install` can lead to dependencies update
+
+If you just cloned a repository and want to add a new package to the project, *run `composer install` before `composer require`*. Otherwise Composer can update other project dependencies without your request.
+
 ## Recipes
 
 The most recent version of the following recipes can be found at https://github.com/AmazeeLabs/d8-starter-composer#readme

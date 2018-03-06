@@ -32,7 +32,7 @@ services:
 ################################################
 ### Do not change anything below here, unless you know what you do
       - .:/var/www/drupal/public_html
-    image: amazeeio/drupal:php70-solr
+    image: amazeeio/drupal:php71-basic
     volumes_from:
       - container:amazeeio-ssh-agent
     container_name: *hostname

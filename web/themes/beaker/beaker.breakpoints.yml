@@ -1,3 +1,6 @@
+# beaker.any:
+#   label: No media query
+#   weight: 1
 # beaker.mobile:
 #   label: mobile
 #   mediaQuery: ''

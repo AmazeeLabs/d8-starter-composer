@@ -27,8 +27,8 @@
         "drupal-composer/drupal-scaffold": "^2.0.1",
         "drupal/admin_toolbar": "~1.0",
         "drupal/config_installer": "~1.0",
-        "drupal/console": "~1.0",
-        "drupal/core": "~8.0",
+        "drupal/console": "^1.0",
+        "drupal/core": "^8.4.0",
         "drupal/ctools": "~3.0",
         "drupal/devel": "~1.0",
         "drupal/entity_reference_revisions": "~1.0",
@@ -42,7 +42,7 @@
         "drupal/redirect": "~1.0",
         "drupal/token": "~1.0",
         "drupal/varnish": "dev-amazee",
-        "drush/drush": "~8.0"
+        "drush/drush": "8.x-dev#8fd7cac73240d16aa51f165e08a6697eda94f06d"
     },
     "conflict": {
         "drupal/drupal": "*"
