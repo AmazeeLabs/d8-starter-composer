@@ -41,7 +41,7 @@ var gulp          = require('gulp'),
 var dev = util.env.env != 'prod' ? true : false;
 var no_error_exit = false;
 
-/*Development stuff, do NOT install on dev/prod*/
+/* Development stuff, do NOT install on dev/prod */
 if( dev ) {
   var browserSync   = require('browser-sync'),
       reload        = browserSync.reload,
@@ -56,25 +56,26 @@ if( dev ) {
       imageminSvgo  = require('imagemin-svgo'),
       iconfont      = require('gulp-iconfont'),
       runTimestamp  = Math.round(Date.now()/1000),
-      yaml          = require('js-yaml');
+      yaml          = require('js-yaml'),
+      stylelint     = require('gulp-stylelint');
 
-  /*Docker setup*/
+  /* Docker setup */
   if( fs.existsSync('./docker-compose.yml') ) {
     var get_hostname     = yaml.safeLoad(fs.readFileSync('./docker-compose.yml', 'utf8'));
     var domain           = get_hostname['services']['drupal']['hostname'];
   }
-  /*Vagrant locally*/
+  /* Vagrant locally */
   else if( fs.existsSync('./domain.json') ) {
     var domain        = require('./domain.json');
   }
-  /*Exit*/
+  /* Exit */
   else {
     exit();
   }
 }
 
 
-/* Gulp SASS dev compile task*/
+/* Gulp Sass dev compile task */
 gulp.task('sass', function () {
   var processors = [
         autoprefixer({browsers: ['last 10 versions', 'ie 10']})
@@ -86,6 +87,12 @@ gulp.task('sass', function () {
       processors = dev ? processors : processors_prod;
 
   gulp.src(path.sass + '/**/*.scss')
+    // .pipe(stylelint({
+    //   fix: true,
+    //   reporters: [
+    //     {formatter: 'string', console: true}
+    //   ]
+    // }))
     .pipe(dev ? sourcemaps.init() : util.noop())
     .pipe(globbing({ extensions: ['.scss'] }))
     .pipe(no_error_exit ? sass.sync().on('error', sass.logError) : sass.sync().on('error', sass.logError).on('error', process.exit.bind(process, 1)))
@@ -101,7 +108,7 @@ gulp.task('sass', function () {
 });
 
 
-/* Gulp browserSync init task*/
+/* Gulp browserSync init task */
 gulp.task('browser-sync', function() {
   var vghostmode = false;
   var vopen = false;
@@ -131,7 +138,7 @@ gulp.task('browser-sync', function() {
 });
 
 
-/* Gulp Image optimization task*/
+/* Gulp Image optimization task */
 gulp.task('images', function() {
     return gulp.src(path.theme + '/**/*.{png,gif,jpg,jpeg,svg}')
     .pipe(imagemin({
@@ -146,7 +153,7 @@ gulp.task('images', function() {
 });
 
 
-/*SVG Minify*/
+/* SVG Minify */
 gulp.task('svg', function() {
   return gulp.src(path.img + '/**/*.svg')
   .pipe(imagemin({
@@ -161,7 +168,7 @@ gulp.task('svg', function() {
 });
 
 
-/* Gulp generate iconfont from SVGs*/
+/* Gulp generate iconfont from SVGs */
 gulp.task('iconfont', function(){
   return gulp.src([path.img + '/iconfont/*.svg'])
     .pipe(iconfont({
@@ -180,15 +187,28 @@ gulp.task('iconfont', function(){
 });
 
 
-/* Gulp jshint taskc*/
+/* Gulp jshint task */
 gulp.task('jshint', function() {
   return gulp.src(path.js + '/**/*.js')
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
+/* Gulp Sass lint task */
+gulp.task('lint-sass', function() {
+  return gulp
+    .src(path.sass + '/**/*.scss')
+    .pipe(stylelint({
+      fix: true,
+      reporters: [
+        {formatter: 'string', console: true}
+      ]
+    }))
+    .pipe(gulp.dest(path.sass + '/'));
+});
 
-/* Gulp browserSync init task*/
+
+/* Gulp browserSync init task */
 gulp.task('watch', ['browser-sync'], function () {
     no_error_exit = true;
     gulp.watch(path.sass + '/**/*.scss', ['sass']);
@@ -200,22 +220,23 @@ gulp.task('watch', ['browser-sync'], function () {
 });
 
 
-/* Default task*/
+/* Default task */
 gulp.task('default', ['watch']);
-/* Gulp compile task for local/dev/prod env with args*/
+/* Gulp compile task for local/dev/prod env with args */
 gulp.task('compile', ['sass']);
 
 
-/*Help task*/
+/* Help task */
 gulp.task('help', function () {
   console.log("\n\nUsage".underline);
   console.log("  gulp [command] --option\n\n"+"Commands:".underline);
   console.log('gulp watch'.yellow+'\t\t\trun with browserSync extension');
-  console.log('gulp compile'.yellow+'\t\t\tcompile SASS for development enviroment');
-  console.log('gulp compile --env=prod'.yellow+'\t\tcompile SASS for production enviroment');
+  console.log('gulp compile'.yellow+'\t\t\tcompile Sass for development enviroment');
+  console.log('gulp compile --env=prod'.yellow+'\t\tcompile Sass for production enviroment');
   console.log('gulp svg'.yellow+'\t\t\trun Optimizes SVGs in beaker (image folder only)');
   console.log('gulp images'.yellow+'\t\t\trun Optimizes Images in beaker');
   console.log('gulp jshint'.yellow+'\t\t\ttool that helps to detect errors & problems');
+  console.log('gulp lint-sass'.yellow+'\t\t\tlint and autofix Sass code');
   console.log('gulp iconfont'.yellow+'\t\t\tGenerate Iconfont from images/iconfont folder (SVG only)');
   console.log("\nOptions for watch task:".underline);
   console.log("\n  --ghostmode\t\t\tsyncs clicks,scroll,forms across browsers");
