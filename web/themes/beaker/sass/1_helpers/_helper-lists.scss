@@ -1,14 +1,12 @@
 // This file include some basic styling for lists
 
 @if $use-basic-lists-styling {
-
   .pane-page-content {
     ul:not(.links)
-      :not(.contextual-links)
-      :not(.slides)
-      :not(.menu)
-      :not(.links--inline)
-      {
+    :not(.contextual-links)
+    :not(.slides)
+    :not(.menu)
+    :not(.links--inline) {
       margin-bottom: 20px;
 
       li {
@@ -16,8 +14,8 @@
         left: 20px;
         margin-bottom: 6px;
 
-        &:before {
-          content: "\2022";
+        &::before {
+          content: '\2022';
           display: inline-block;
           position: relative;
           left: -12px;

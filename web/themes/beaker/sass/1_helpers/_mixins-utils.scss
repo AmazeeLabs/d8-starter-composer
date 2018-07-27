@@ -49,8 +49,8 @@
 // =============================================================================
 
 @mixin clearfix {
-  &:after {
-    content: "";
+  &::after {
+    content: '';
     display: table;
     clear: both;
   }
@@ -88,6 +88,7 @@
 
 @mixin animation($name,$delay:false) {
   @include translate3d(0,0,0,0);
+
   animation: #{$name};
   animation-fill-mode: forwards;
 
@@ -105,7 +106,7 @@
 // =============================================================================
 
 @mixin fadein($duration) {
-    @include animation(fadein #{$duration} 1 ease-in-out);
+  @include animation(fadein #{$duration} 1 ease-in-out);
 }
 
 
@@ -135,20 +136,23 @@
 // FONT-FACE MIXIN
 // =============================================================================
 
-@mixin font-face($style-name, $file, $folder, $category:"") {
-  $filepath: "../fonts/" + $folder + "/" + $file;
+@mixin font-face($style-name, $file, $folder, $category:'') {
+  $filepath: '../fonts/' + $folder + '/' + $file;
+
   @font-face {
-    font-family: "#{$style-name}";
+    font-family: '#{$style-name}';
     src: url($filepath + ".eot");
     src: url($filepath + ".eot?#iefix") format('embedded-opentype'), url($filepath + ".woff") format('woff'), url($filepath + ".ttf")  format('truetype'), url($filepath + ".svg#" + $style-name + "") format('svg');
   }
+
   %#{$style-name} {
     font: {
-      @if $category != "" {
-        family: "#{$style-name}", $category;
+      @if $category != '' {
+        family: '#{$style-name}', $category;
       }
+
       @else {
-        family: "#{$style-name}";
+        family: '#{$style-name}';
         weight: normal;
       }
     }
@@ -160,5 +164,6 @@
 
 @function image-url($image) {
   $url: unquote('url(../images/' + $image + ')');
+
   @return $url;
 }

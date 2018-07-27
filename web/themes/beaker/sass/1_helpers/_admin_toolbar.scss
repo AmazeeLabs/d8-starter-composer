@@ -7,24 +7,29 @@
   // consistently between theme and admin pages.
   // =============================================================================
   .toolbar {
-    font-family: "Source Sans Pro", "Lucida Grande", Verdana, sans-serif;
+    font-family: 'Source Sans Pro', 'Lucida Grande', Verdana, sans-serif;
+
     a {
       font-weight: normal;
     }
-    button, input[type="button"], input[type="submit"] {
+
+    button, input[type='button'], input[type='submit'] {
       letter-spacing: 0;
     }
   }
+
   .toolbar-tray {
     a:link,
     a:visited {
       color: #565656;
-      font-family: "Source Sans Pro", "Lucida Grande", Verdana, sans-serif;
+      font-family: 'Source Sans Pro', 'Lucida Grande', Verdana, sans-serif;
     }
   }
-  .toolbar .toolbar-icon:before {
+
+  .toolbar .toolbar-icon::before {
     box-sizing: content-box; // Display the Druplicon at the correct size.
   }
+
   .menu-item:hover {
     background-color: inherit;
   }

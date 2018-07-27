@@ -18,17 +18,19 @@ $tablet-only: ($tablet-up + 1px) ($desktop-up - 1px);
 // JAVASCRIPT BREAKPOINTS
 // =============================================================================
 
-html:before {
-  content: "desktop";
+html::before {
+  content: 'desktop';
   display: none; /* Prevent from displaying. */
 }
+
 @include breakpoint($tablet) {
-  html:before {
-    content: "tablet";
+  html::before {
+    content: 'tablet';
   }
 }
+
 @include breakpoint($mobile) {
-  html:before {
-    content: "mobile";
+  html::before {
+    content: 'mobile';
   }
 }

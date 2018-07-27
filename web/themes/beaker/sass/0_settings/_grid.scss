@@ -10,22 +10,24 @@ $susy: (
   gutters: 20px/40px,
   column-width: 40px,
   container: 1280px,
-  // gutter-position: inside-static,
+  
   debug: (
     image: show-columns,
     color: rgba($red,0.1),
-    // output: overlay,
-    // toggle: bottom right,
+    
+    
   ),
-);
+)  ;
 
 
 // GENERAL BREAKPOINTS
 // =============================================================================
 .grid {
   padding: 0 15px;
+
   @include breakpoint($tablet-up) {
     @include container($susy);
+
     padding: 0 40px;
   }
 

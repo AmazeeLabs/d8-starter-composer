@@ -17,42 +17,40 @@
   // REMOVE WEBKIT'S ASSUMPTIONS ABOUT OUR BUTTONS!
   // =============================================================================
   button,
-  input[type="button"],
-  input[type="reset"],
-  input[type="submit"],
-  input[type="text"],
-  input[type="password"],
-  input[type="datetime"],
-  input[type="datetime-local"],
-  input[type="date"],
-  input[type="month"],
-  input[type="time"],
-  input[type="week"],
-  input[type="number"],
-  input[type="email"],
-  input[type="url"],
-  input[type="search"],
-  input[type="tel"],
-  input[type="color"]
-  {
+  input[type='button'],
+  input[type='reset'],
+  input[type='submit'],
+  input[type='text'],
+  input[type='password'],
+  input[type='datetime'],
+  input[type='datetime-local'],
+  input[type='date'],
+  input[type='month'],
+  input[type='time'],
+  input[type='week'],
+  input[type='number'],
+  input[type='email'],
+  input[type='url'],
+  input[type='search'],
+  input[type='tel'],
+  input[type='color'] {
     appearance: none;
   }
 
   button,
-  input[type="button"],
-  input[type="submit"]
-  {
+  input[type='button'],
+  input[type='submit'] {
     @include button($blue);
   }
 
   // STANDARD FORM STYLES
   // =============================================================================
-  input[type="text"],
-  input[type="password"],
-  input[type="email"],
-  textarea
-  {
+  input[type='text'],
+  input[type='password'],
+  input[type='email'],
+  textarea {
     @include text-input;
+
     max-width: 100%;
 
     @include breakpoint($mobile) {
@@ -62,11 +60,10 @@
 
   // ERROR
   // =============================================================================
-  input[type="text"],
-  input[type="password"],
-  input[type="email"],
-  textarea
-  {
+  input[type='text'],
+  input[type='password'],
+  input[type='email'],
+  textarea {
     &.error {
       border: 1px solid $red !important;
     }
@@ -75,7 +72,7 @@
   //Chosen Error styling
   .form-select.error {
     .chosen-single {
-      border: 0px none;
+      border: 0 none;
 
       span {
         border: 1px solid $red;
@@ -84,9 +81,8 @@
   }
 
   //Error styling for Radio & Checkbox
-  input[type="checkbox"].error + label.option span,
-  input[type="radio"].error + label.option span
-  {
+  input[type='checkbox'].error + label.option span,
+  input[type='radio'].error + label.option span {
     border: 1px solid $red;
   }
 
@@ -129,8 +125,7 @@
   // =============================================================================
   form .help-block,
   form .description,
-  form .help
-  {
+  form .help {
     clear: both;
     display: block;
     margin-top: 5px;
@@ -160,6 +155,7 @@
   // =============================================================================
   html.js .form-autocomplete {
     background-image: none;
+
     &.throbbing {
       background-image: url(../images/icons/loader.gif);
       background-repeat: no-repeat;
@@ -174,28 +170,27 @@
   // =============================================================================
 
   .form-type-radio,
-  .form-type-checkbox
-  {
+  .form-type-checkbox {
     @include clearfix;
 
-    input[type="checkbox"],
-    input[type="radio"]
-    {
-      display: none;
+    input[type='checkbox'],
+    input[type='radio'] {
       @include user-select(none);
+
+      display: none;
     }
 
     label {
+      @include user-select(none);
+
       float: left;
       cursor: pointer;
       font-size: 18px;
       margin-left: 32px;
-      @include user-select(none);
     }
 
     span.radio,
-    span.checkbox
-    {
+    span.checkbox {
       display: inline-block;
       position: relative;
       left: -10px;
@@ -217,14 +212,14 @@
       }
 
       .section-feedback-form & {
-        margin: 0px;
+        margin: 0;
       }
 
       &.checked {
         border-color: $black;
 
-        &:before {
-          content: "";
+        &::before {
+          content: '';
           display: block;
           width: 70%;
           height: 70%;
@@ -242,7 +237,7 @@
       &.checked {
         // background: $white url(../images/icons/radio.png) no-repeat center center;
         // @include background-size(80%);
-        &:before {
+        &::before {
           border-radius: 50%;
         }
       }
