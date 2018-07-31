@@ -4,10 +4,11 @@
     "stylelint-config-sass-guidelines"
   ],
   "rules": {
+    "declaration-property-value-blacklist": null,
+    "function-url-quotes": null,
     "max-nesting-depth": 3,
     "order/properties-alphabetical-order": null,
-    "function-url-quotes": null,
+    "scss/at-mixin-pattern": "^[a-z]+[0-9]?([a-z0-9-]+[a-z0-9]+)?$",
     "selector-class-pattern": null,
-    "scss/at-mixin-pattern": "^[a-z]+[0-9]?([a-z0-9-]+[a-z0-9]+)?$"
   }
 }
