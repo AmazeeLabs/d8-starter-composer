@@ -4,11 +4,13 @@
 html {
   @include font-regular;
   @include font-size($base-font-size,true);
+
+  -webkit-font-smoothing: antialiased;
+
   @include breakpoint($mobile) {
     font-size: 87.5%;
     line-height: 1.5;
   }
-  -webkit-font-smoothing: antialiased;
 }
 
 // HEADER STYLES
@@ -38,6 +40,7 @@ h3 {
 
 h4 {
   @include h4;
+
   margin: 0;
 }
 

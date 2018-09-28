@@ -3,6 +3,7 @@
 a:link,
 a:visited {
   @include font-semibold;
+
   text-decoration: none;
   color: $black;
 }

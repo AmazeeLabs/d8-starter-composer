@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "stylelint-config-amazee",
+    "stylelint-config-sass-guidelines"
+  ],
+  "rules": {
+    "declaration-property-value-blacklist": null,
+    "function-url-quotes": null,
+    "max-nesting-depth": 3,
+    "order/properties-alphabetical-order": null,
+    "scss/at-mixin-pattern": "^[a-z]+[0-9]?([a-z0-9-]+[a-z0-9]+)?$",
+    "selector-class-pattern": null,
+  }
+}

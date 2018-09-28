@@ -10,8 +10,7 @@
 .styleguide-content .region-header,
 .styleguide-content #block-beaker-local-tasks,
 .styleguide-content #block-beaker-branding,
-.styleguide-content #block-beaker-page-title
-{
+.styleguide-content #block-beaker-page-title {
   display: none;
 }
 
@@ -29,12 +28,12 @@
   border-right: 1px solid $sg-border-color-light;
   box-shadow: 0 -10px 20px $sg-sidebar-bg;
 
-  &:after {
-    content: "powered by";
+  &::after {
+    content: 'powered by';
     color: #999;
-    font-size: .8rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
     position: absolute;
     left: 20px;
     bottom: -27px;

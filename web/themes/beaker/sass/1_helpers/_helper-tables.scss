@@ -1,7 +1,6 @@
 // This file include some basic styling for tables
 
 @if $use-basic-tables-styling {
-
   table {
     width: 100%;
     border: 1px solid $black;
@@ -39,22 +38,24 @@
     tbody {
       tr {
         &:nth-child(even) {
-        th {
-          background: lighten($black,20%);
-        }
-        td {
-          background: lighten($black,20%);
-        }
-      }
+          th {
+            background: lighten($black,20%);
+          }
 
-      &:nth-child(odd) {
-        th {
-          background: lighten($black,20%);
+          td {
+            background: lighten($black,20%);
+          }
         }
-        td {
-          background: $white;
+
+        &:nth-child(odd) {
+          th {
+            background: lighten($black,20%);
+          }
+
+          td {
+            background: $white;
+          }
         }
-      }
       }
     }
   }

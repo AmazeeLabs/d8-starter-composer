@@ -2,10 +2,11 @@
   border-top: 0 none;
 
   .inner {
+    @include clearfix;
+
     padding-bottom: $sg-spacing;
     margin-bottom: $sg-spacing;
     border-bottom: 1px solid $sg-border-color;
-    @include clearfix;
   }
 
   .left {

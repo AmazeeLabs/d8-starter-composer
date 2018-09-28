@@ -73,7 +73,7 @@ $transition-support-threshold: $graceful-usage-threshold;
 $background-clip-support-threshold: $critical-usage-threshold;
 
 @function prefix-identifier($ident, $prefix: $current-prefix) {
-  @return unquote(#{$prefix}#{if($prefix, "-", null)}#{$ident});
+  @return unquote(#{$prefix}#{if($prefix, '-', null)}#{$ident});
 }
 
 @function comma-list($list: ()) {
@@ -82,22 +82,27 @@ $background-clip-support-threshold: $critical-usage-threshold;
 
 @function transition-map($transition) {
   $transition-map: ();
+
   @each $item in $transition {
     @if is-time($item) {
       @if map-has-key($transition-map, duration) {
         $transition-map: map-merge($transition-map, (delay: $item));
       }
+
       @else {
         $transition-map: map-merge($transition-map, (duration: $item));
       }
     }
+
     @else if map-has-key($transition-map, property) {
       $transition-map: map-merge($transition-map, (timing-function: $item));
     }
+
     @else {
       $transition-map: map-merge($transition-map, (property: $item));
     }
   }
+
   @return $transition-map;
 }
 
@@ -105,17 +110,22 @@ $background-clip-support-threshold: $critical-usage-threshold;
   @if not $prefix {
     @return $property;
   }
+
   @if type-of($property) == list or type-of($property) == arglist {
     $new-list: comma-list();
+
     @each $v in $property {
       $new-list: append($new-list, prefixed-for-transition($prefix, $v));
     }
+
     @return $new-list;
   }
+
   @else {
     @if index($transitionable-prefixed-values, $property) {
       @return #{$prefix}-#{$property};
     }
+
     @else {
       @return $property;
     }
@@ -124,9 +134,11 @@ $background-clip-support-threshold: $critical-usage-threshold;
 
 @function set-arglist-default($arglist, $default) {
   $default-index: index($arglist, default);
+
   @if $default-index {
     $arglist: set-nth($arglist, $default-index, $default);
   }
+
   @return if(length($arglist) > 0, $arglist, $default);
 }
 
@@ -145,89 +157,108 @@ $background-clip-support-threshold: $critical-usage-threshold;
 @mixin with-prefix($prefix) {
   @if $current-prefix or $prefix-context {
     @if $current-prefix == $prefix or $prefix-context == $prefix {
-      @if $debug-browser-support {
-        @if $prefix {
-          // content for #{$prefix} because #{$current-prefix or $prefix-context} is already in scope.
-        }
-        @else {
-          // unprefixed content. #{$current-prefix or $prefix-context} is already in scope.
-        }
-      }
       $old-prefix-context: $prefix-context;
       $old-prefix: $current-prefix;
       $prefix-context: $prefix-context or $current-prefix !global;
       $current-prefix: $prefix !global;
-      @content;
       $prefix-context: $old-prefix-context !global;
       $current-prefix: $old-prefix !global;
+
+      @if $debug-browser-support {
+        @if $prefix {
+          // content for #{$prefix} because #{$current-prefix or $prefix-context} is already in scope.
+        }
+
+        @else {
+          // unprefixed content. #{$current-prefix or $prefix-context} is already in scope.
+        }
+      }
+
+      @content;
     }
+
     @else if $prefix == null {
       $old-prefix-context: $prefix-context;
       $prefix-context: $prefix-context or $current-prefix !global;
       $current-prefix: null !global;
+      $current-prefix: $prefix-context !global;
+      $prefix-context: $old-prefix-context !global;
+
       @if $debug-browser-support {
         // Content for official syntax. Prefix context is still #{$prefix-context}.
       }
+
       @content;
-      $current-prefix: $prefix-context !global;
-      $prefix-context: $old-prefix-context !global;
     }
+
     @else if $debug-browser-support {
       // Omitting content for #{$prefix} because #{$current-prefix} is already in scope.
     }
   }
+
   @else {
+    $prefix-context: $prefix !global;
+    $current-prefix: $prefix !global;
+    $current-prefix: null !global;
+    $prefix-context: null !global;
+
     @if $debug-browser-support and $prefix {
       //Creating new #{$prefix} context.
     }
-    $prefix-context: $prefix !global;
-    $current-prefix: $prefix !global;
+
     @content;
-    $current-prefix: null !global;
-    $prefix-context: null !global;
   }
 }
 
 @mixin with-each-prefix($capability, $threshold, $capability-options: $default-capability-options) {
+  @include with-prefix(null) {
+    @include with-browser-ranges($capability) {
+      @content;
+    }
+  }
+
   @each $prefix, $should-use-prefix in prefixes-for-capability($capability, $threshold, $capability-options) {
     @if $should-use-prefix {
-      @if $debug-browser-support and type-of($should-use-prefix) == list {
-        // Capability #{$capability} is prefixed with #{$prefix} because #{$should-use-prefix} is required.
-      }
-      @else if $debug-browser-support and type-of($should-use-prefix) == number {
-        // Capability #{$capability} is prefixed with #{$prefix} because #{$should-use-prefix}% of users need it which is more than the threshold of #{$threshold}%.
-      }
       @include with-prefix($prefix) {
         @include with-browser-ranges($capability) {
           @content;
         }
       }
+
+      @if $debug-browser-support and type-of($should-use-prefix) == list {
+        // Capability #{$capability} is prefixed with #{$prefix} because #{$should-use-prefix} is required.
+      }
+
+      @else if $debug-browser-support and type-of($should-use-prefix) == number {
+        // Capability #{$capability} is prefixed with #{$prefix} because #{$should-use-prefix}% of users need it which is more than the threshold of #{$threshold}%.
+      }
     }
+
     @else if $debug-browser-support {
       // Capability #{$capability} is not prefixed with #{$prefix} because #{prefix-usage($prefix, $capability, $capability-options)}% of users are affected which is less than the threshold of #{$threshold}.
-    }
-  }
-  @include with-prefix(null) {
-    @include with-browser-ranges($capability) {
-      @content;
     }
   }
 }
 
 @mixin with-browser-ranges($capability, $prefix: $current-prefix) {
   $new-ranges: null;
+
   @if type-of($capability) == map {
     $new-ranges: $capability;
   }
+
   @else {
     $new-ranges: browser-ranges($capability, $prefix);
   }
+
   @if has-browser-subset($current-browser-versions, $new-ranges) {
     $old-ranges: $current-browser-versions;
     $current-browser-versions: intersect-browser-ranges($old-ranges, $new-ranges) !global;
-    @content;
     $current-browser-versions: $old-ranges !global;
+
+    @content;
   }
+
   @else if $debug-browser-support {
     // Excluding content because #{inspect($new-ranges)} is not included within
     //  #{inspect($current-browser-versions)}
@@ -236,6 +267,7 @@ $background-clip-support-threshold: $critical-usage-threshold;
 
 @mixin transform($transform, $only3d: false) {
   $capability: if($only3d, transforms3d, transforms2d);
+
   @include prefixed-properties($capability, $transform-support-threshold, (transform: $transform));
 }
 
@@ -245,42 +277,52 @@ $background-clip-support-threshold: $critical-usage-threshold;
 
 @mixin translate($translate-x: $default-translate-x, $translate-y: $default-translate-y, $perspective: false, $only3d: false) {
   $trans: translate($translate-x, $translate-y);
+
+  @include transform($trans, $only3d);
+
   @if $perspective {
     $trans: perspective($perspective) $trans;
   }
-  @include transform($trans, $only3d);
 }
 
 @mixin translateX($trans-x: $default-translate-x, $perspective: false, $only3d: false) {
   $trans: translateX($trans-x);
+
+  @include transform($trans, $only3d);
+
   @if $perspective {
     $trans: perspective($perspective) $trans;
   }
-  @include transform($trans, $only3d);
 }
 
 @mixin translateY($trans-y: $default-translate-y, $perspective: false, $only3d: false) {
   $trans: translateY($trans-y);
+
+  @include transform($trans, $only3d);
+
   @if $perspective {
     $trans: perspective($perspective) $trans;
   }
-  @include transform($trans, $only3d);
 }
 
 @mixin translateZ($trans-z: $default-translate-z, $perspective: false) {
   $trans: translateZ($trans-z);
+
+  @include transform3d($trans);
+
   @if $perspective {
     $trans: perspective($perspective) $trans;
   }
-  @include transform3d($trans);
 }
 
 @mixin rotate($rotate: $default-rotate, $perspective: false, $only3d: false) {
   $trans: rotate($rotate);
+
+  @include transform($trans, $only3d);
+
   @if $perspective {
     $trans: perspective($perspective) $trans;
   }
-  @include transform($trans, $only3d);
 }
 
 // @mixin font-face($name, $font-files, $eot: false, $weight: false, $style: false) {
@@ -303,33 +345,39 @@ $background-clip-support-threshold: $critical-usage-threshold;
 
 @mixin scale($scale-x: $default-scale-x, $scale-y: $scale-x, $perspective: false, $only3d: false) {
   $trans: scale($scale-x, $scale-y);
+
+  @include transform($trans, $only3d);
+
   @if $perspective {
     $trans: perspective($perspective) $trans;
   }
-  @include transform($trans, $only3d);
 }
 
 @mixin background-clip($clip...) {
   $output: ();
   $deprecated: ();
+
+  @include with-each-prefix(background-img-opts, $background-clip-support-threshold) {
+    @if $current-prefix == -moz or $current-prefix == -webkit {
+      // Legacy versions of Mozilla support a different syntax, prefixed.
+      @include prefix-prop(background-clip, $deprecated);
+    }
+
+    @else {
+      @include prefix-prop(background-clip, $output);
+    }
+  }
+
   @if length($clip) > 0 {
     @each $layer in $clip {
       $output: append($output, unquote($layer), comma);
       $deprecated: append($deprecated, legacy-box($layer), comma);
     }
   }
+
   @else {
     $output: $default-background-clip;
     $deprecated: legacy-box($default-background-clip);
-  }
-  @include with-each-prefix(background-img-opts, $background-clip-support-threshold) {
-    @if $current-prefix == -moz or $current-prefix == -webkit {
-      // Legacy versions of Mozilla support a different syntax, prefixed.
-      @include prefix-prop(background-clip, $deprecated);
-    }
-    @else {
-      @include prefix-prop(background-clip, $output);
-    }
   }
 }
 
@@ -348,6 +396,7 @@ $background-clip-support-threshold: $critical-usage-threshold;
 
 @mixin horizontal-list($padding: 4px, $direction: left) {
   @include horizontal-list-container;
+
   li {
     @include horizontal-list-item($padding, $direction);
   }
@@ -355,17 +404,22 @@ $background-clip-support-threshold: $critical-usage-threshold;
 
 @mixin horizontal-list-item($padding: 4px, $direction: left) {
   @include no-bullet;
-  white-space: nowrap;
   @include float($direction);
+
+  white-space: nowrap;
+
   @if $padding {
     padding: {
       left: $padding;
       right: $padding;
     };
+
     &.first {
       @if $direction == left {
         padding-left: 0;
-      } @else {
+      }
+
+      @else {
         padding-right: 0;
       }
     }
@@ -373,7 +427,9 @@ $background-clip-support-threshold: $critical-usage-threshold;
     &.last {
       @if $direction == left {
         padding-right: 0;
-      } @else {
+      }
+
+      @else {
         padding-left: 0;
       }
     }
@@ -391,7 +447,8 @@ $legacy-float-support-threshold: $critical-usage-threshold;
 
 @mixin float($side: left) {
   float: unquote($side);
-  @if support-legacy-browser("ie", "6", $threshold: $legacy-float-support-threshold) {
+
+  @if support-legacy-browser('ie', '6', $threshold: $legacy-float-support-threshold) {
     display: inline;
   }
 }

@@ -26,7 +26,7 @@
   // end if
 }
 
-@mixin baseLineSpacing($type: "margin",$direction: "bottom",$steps: 1) {
+@mixin baseLineSpacing($type: 'margin',$direction: 'bottom',$steps: 1) {
   #{$type}-#{$direction}:$steps*($base-line-height*1px);
   #{$type}-#{$direction}:$steps*(($base-line-height/$base-font-size)*1rem);
 }

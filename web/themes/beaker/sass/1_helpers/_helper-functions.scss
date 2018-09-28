@@ -7,6 +7,7 @@
 @function rem($px, $ref: $base-font-size) {
   @return toRem(toPx($px) / toPx($ref));
 }
+
 @function em($px, $ref: $base-font-size) {
   @return toEm(toPx($px) / toPx($ref));
 }
@@ -14,18 +15,21 @@
 @function pxToEm($px, $ref: $base-font-size) {
   @return toEm(toPx($px) / toPx($ref));
 }
+
 @function pxToRem($px) {
   @return toRem(toPx($px) / toPx($base-font-size));
 }
 
 @function toEm($val) {
-  @return ($val + 0em);
+  @return ($val + 0);
 }
+
 @function toRem($val) {
-  @return ($val + 0rem);
+  @return ($val + 0);
 }
+
 @function toPx($val) {
-  @return ($val + 0px);
+  @return ($val + 0);
 }
 
 /// Remove the unit of a length

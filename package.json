@@ -31,8 +31,12 @@
     "gulp-css-globbing": ">=0.1.8",
     "gulp-postcss": ">=6.0.1",
     "gulp-sass": ">=2.0.4",
+    "gulp-stylelint": "^7.0.0",
     "gulp-util": ">=3.0.6",
     "stream-browserify": ">=2.0.1",
+    "stylelint": "^9.4.0",
+    "stylelint-config-amazee": "^1.0.3",
+    "stylelint-config-sass-guidelines": "^5.0.0",
     "susy": "~2.2.5"
   },
   "scripts": {
