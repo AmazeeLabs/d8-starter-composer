@@ -1,0 +1,25 @@
+FROM amazeeio/node:6-builder as nodebuilder
+
+COPY package.json yarn.lock /app/
+
+RUN yarn install --pure-lockfile
+
+COPY gulpfile.js  /app/
+
+COPY web/themes/beaker web/themes/beaker
+
+RUN yarn run gulp -- compile --env=prod
+
+FROM amazeeio/php:7.1-cli-drupal
+
+COPY composer.json composer.lock /app/
+COPY scripts /app/scripts
+COPY web/sites/default /app/web/sites/default
+RUN composer install --no-dev
+
+COPY --from=nodebuilder /app /app/
+
+COPY . /app
+
+# Define where the Drupal Root is located
+ENV WEBROOT=web
