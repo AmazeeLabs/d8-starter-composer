@@ -4,19 +4,6 @@
     "type": "project",
     "repositories": [
         {
-            "type":"package",
-            "package": {
-                "name": "drupal/varnish",
-                "version": "dev-amazee",
-                "type": "drupal-module",
-                "source": {
-                    "type": "git",
-                    "url": "git@github.com:AmazeeLabs/varnish.git",
-                    "reference": "8.x-1.x-amazee"
-                }
-            }
-        },
-        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         }
@@ -28,7 +15,7 @@
         "drupal/admin_toolbar": "~1.0",
         "drupal/config_installer": "~1.0",
         "drupal/console": "^1.0",
-        "drupal/core": "^8.5",
+        "drupal/core": "^8.6",
         "drupal/ctools": "~3.0",
         "drupal/devel": "~1.2",
         "drupal/entity_reference_revisions": "~1.0",
@@ -41,8 +28,9 @@
         "drupal/pathauto": "~1.0",
         "drupal/redirect": "~1.0",
         "drupal/token": "~1.0",
-        "drupal/varnish": "dev-amazee",
-        "drush/drush": "~8.1.15"
+        "drupal/varnish_purge": "^1.10",
+        "drupal/purge": "^3.0",
+        "drush/drush": "8.1.15"
     },
     "conflict": {
         "drupal/drupal": "*"
