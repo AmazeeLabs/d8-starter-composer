@@ -41,7 +41,8 @@
         "drupal/pathauto": "~1.0",
         "drupal/redirect": "~1.0",
         "drupal/token": "~1.0",
-        "drupal/varnish": "dev-amazee",
+        "drupal/varnish_purge": "^1.10",
+        "drupal/purge": "^3.0",
         "drush/drush": "~8.1.15"
     },
     "conflict": {
