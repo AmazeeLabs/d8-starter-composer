@@ -44,12 +44,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AmazeeLabs/d8-starter.git"
+    "url": "https://github.com/AmazeeLabs/d8-starter-composer.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AmazeeLabs/d8-starter/issues"
+    "url": "https://github.com/AmazeeLabs/d8-starter-composer/issues"
   },
-  "homepage": "https://github.com/AmazeeLabs/d8-starter"
+  "homepage": "https://github.com/AmazeeLabs/d8-starter-composer"
 }
