@@ -3,7 +3,7 @@ type: theme
 base theme: classy
 description: 'Custom Theme made by Amazee Labs'
 package: Core
-core: 8.x
+core_version_requirement: ^8 || ^9
 libraries:
   - beaker/base
 stylesheets-remove:
